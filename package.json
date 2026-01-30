@@ -1,0 +1,25 @@
+{
+  "name": "chinainfo",
+  "version": "1.0.0",
+  "description": "Loja de informatica",
+  "homepage": "https://github.com/chinagliadev/ChinaInfo#readme",
+  "bugs": {
+    "url": "https://github.com/chinagliadev/ChinaInfo/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chinagliadev/ChinaInfo.git"
+  },
+  "license": "ISC",
+  "author": "Victor Chinaglia",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index",
+    "dev": "nodemon index"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "nodemon": "^3.1.11"
+  }
+}
