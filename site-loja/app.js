@@ -17,7 +17,7 @@ function fnMontarCardProduto(produto){
                     <div class="card-body">
                         <h5 class="card-title">${produto.titulo}</h5>
                         <p class="card-text">${produto.descricao}</p>
-                        <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex justify-content-between align-items-center mt-3">
                             <span class="h5 mb-0">R$ ${produto.preco}</span>
                             <div>
                                 <i class="bi bi-star-fill text-warning"></i>
