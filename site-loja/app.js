@@ -1,5 +1,15 @@
 function fnCarregarDados(){
-    fetch('http://localhost:8000/produtos', {method: 'GET'})
+
+    const paramentros = new URLSearchParams(window.location.search)
+    const isExist = paramentros.has('categoria')
+
+    let rota_categoria = ''
+    
+    if(isExist){
+        rota_categoria = paramentros.get('categoria') + '/'
+    }
+
+    fetch('http://localhost:8000/produtos/' + rota_categoria , {method: 'GET'})
         .then(response => response.json())
         .then((produtos)=>{
             produtos.forEach(produto => {

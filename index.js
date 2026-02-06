@@ -27,9 +27,12 @@ app.get('/', (req, res) => {
     res.send('ChinaInto')
 })
 
-app.get('/produtos', (req, res) => {
+app.get('/produtos/:categoria', (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*')
-    conexao.query('SELECT * FROM produtos', (error, lista_produtos, campos) => {
+
+    const categoria = req.params.categoria
+
+    conexao.query(`SELECT * FROM produtos WHERE categoria = '${categoria}'`, (error, lista_produtos, campo) => {
         res.send(lista_produtos)
     })
 })
