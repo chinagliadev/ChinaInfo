@@ -1,17 +1,45 @@
 function fnCarregarDados(){
 
     const paramentros = new URLSearchParams(window.location.search)
-    const isExist = paramentros.has('categoria')
+    const existe_categoria = paramentros.has('categoria')
+    const existe_ordem = paramentros.has('ordenar')
+
+    const filtro = document.querySelector('.filtro')
+    const categoria = paramentros.get('categoria')
+
+    filtro.innerHTML = `
+        <li><a class="dropdown-item" href="produtos.html?categoria=${categoria}&ordenar=preco">Ordenar pelo preços</a></li>
+        <li><a class="dropdown-item" href="produtos.html?categoria=${categoria}&ordenar=titulo">Ordenar pelo titulo</a></li>
+    `
+
+    const link_filtro = document.getElementById('link_filtro')
+    const dropdownitem = document.querySelectorAll('.dropdown-item')
+
+    link_filtro.textContent = ''
+
+    dropdownitem.forEach(drop=>{
+        drop.addEventListener('click', ()=>{
+            link_filtro.innerHTML = drop.textContent
+        })
+
+    })
 
     let rota_categoria = ''
-    
-    if(isExist){
+    if(existe_categoria){
         rota_categoria = paramentros.get('categoria') + '/'
+        console.log(rota_categoria)
+    }
+    
+    let rota_ordem = ''
+    if(existe_ordem){
+        rota_ordem = paramentros.get('ordenar')
+        console.log(rota_ordem)
     }
 
-    fetch('http://localhost:8000/produtos/' + rota_categoria , {method: 'GET'})
+    fetch('http://localhost:8000/produtos/' + rota_categoria + rota_ordem, {method: 'GET'})
         .then(response => response.json())
         .then((produtos)=>{
+            console.log(produtos)
             produtos.forEach(produto => {
                 fnMontarCardProduto(produto)
             });
@@ -51,4 +79,10 @@ function fnMontarCardProduto(produto){
  
 fnCarregarDados()
 
+
+const filtro = document.querySelector('.filtro')
+
+function criarLink(){
+
+}
 

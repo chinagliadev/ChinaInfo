@@ -37,6 +37,15 @@ app.get('/produtos/:categoria', (req, res) => {
     })
 })
 
+app.get('/produtos', (req, res)=>{
+     res.setHeader('Access-Control-Allow-Origin', '*')
+    const sql = 'SELECT * FROM produtos'
+
+    conexao.query(sql, (error, lista_produtos, campo)=>{
+        res.send(lista_produtos)
+    })
+})
+
 app.get('/unidades', (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*')
     conexao.query('SELECT * FROM unidades', (error, lista_unidades, campos)=>{
@@ -44,6 +53,14 @@ app.get('/unidades', (req, res) => {
     })
 })
 
+app.get('/produtos/:categoria/:ordenar', (req, res)=>{
+    res.setHeader('Access-Control-Allow-Origin', '*')
+    const {categoria, ordenar} = req.params
 
+    conexao.query(`SELECT * FROM produtos WHERE categoria = '${categoria}' ORDER BY ${ordenar} ASC`, (error, produto_filtrado, campo)=>{
+        res.send(produto_filtrado)
+    })
+    
+})
 
 app.listen(PORT)
