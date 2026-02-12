@@ -1,8 +1,10 @@
 const express = require('express')
+const cors = require('cors')
 const app = express()
-const PORT = 8000
+const PORT = 3000
 
-app.use(express.json(),)
+app.use(express.json())
+app.use(cors())
 
 let mysql = require('mysql')
 
@@ -28,7 +30,6 @@ app.get('/', (req, res) => {
 })
 
 app.get('/produtos/:categoria', (req, res) => {
-    res.setHeader('Access-Control-Allow-Origin', '*')
 
     const categoria = req.params.categoria
 
@@ -38,7 +39,7 @@ app.get('/produtos/:categoria', (req, res) => {
 })
 
 app.get('/produtos', (req, res)=>{
-     res.setHeader('Access-Control-Allow-Origin', '*')
+
     const sql = 'SELECT * FROM produtos'
 
     conexao.query(sql, (error, lista_produtos, campo)=>{
@@ -47,14 +48,36 @@ app.get('/produtos', (req, res)=>{
 })
 
 app.get('/unidades', (req, res) => {
-    res.setHeader('Access-Control-Allow-Origin', '*')
     conexao.query('SELECT * FROM unidades', (error, lista_unidades, campos)=>{
         res.send(lista_unidades)
     })
 })
 
+app.post('/produto', (req,res)=>{
+    const {titulo, preco, descricao, avaliacao, foto, categoria} = req.body
+
+    console.log(titulo)
+    console.log(preco)
+    console.log(descricao)
+    console.log(avaliacao)
+    console.log(foto)
+    console.log(categoria)
+
+    const sql = `INSERT INTO produtos 
+                (titulo, foto, descricao, preco, avaliacao, categoria)
+                VALUES('${titulo}', '${foto}', '${descricao}', ${preco}, ${avaliacao}, '${categoria}')`
+
+
+    conexao.query(sql, (erro, resultado)=>{
+        if(erro){
+            throw erro
+        }
+
+        res.send(resultado.insertId)
+    })
+})
+
 app.get('/produtos/:categoria/:ordenar', (req, res)=>{
-    res.setHeader('Access-Control-Allow-Origin', '*')
     const {categoria, ordenar} = req.params
 
     conexao.query(`SELECT * FROM produtos WHERE categoria = '${categoria}' ORDER BY ${ordenar} ASC`, (error, produto_filtrado, campo)=>{

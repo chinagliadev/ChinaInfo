@@ -1,0 +1,7 @@
+Bibibliotecas utilizadas
+-- Nodemon
+-- MySql
+-- Express
+-- Cors
+
+tudo na base do npm install (Bibibliotecas)
