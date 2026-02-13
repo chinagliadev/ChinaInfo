@@ -86,4 +86,17 @@ app.get('/produtos/:categoria/:ordenar', (req, res)=>{
     
 })
 
+app.post('/unidades/', (req, res)=>{
+    const {nome, telefone, email, endereco, latitude, longitute, foto} = req.body
+
+    const sql = `INSERT INTO unidades (nome_da_loja, telefone, email, endereco, latitude, longitude, foto) 
+                VALUES ('${nome}', '${telefone}', '${email}', '${endereco}', '${latitude}', '${longitute}', '${foto}')`
+
+    conexao.query(sql, (erro, resultado)=>{
+        if(erro) throw erro
+
+        res.send(resultado.insertId)
+    })
+})
+
 app.listen(PORT)
