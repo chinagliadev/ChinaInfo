@@ -18,6 +18,10 @@ npm install mysql
 ```bash
 npm install cors
 ```
+##### BodyParse
+```bash
+npm install body-parser
+```
 ---
 #### Chamando modulos e utilizando bibliotecas
 
@@ -25,10 +29,16 @@ npm install cors
 
 const express = require('express)
 const mysql = require('express)
-const cors = require('express)
+const cors = require('cors)
+const bodyParser = require('body-parser)
 
 app.use(express.json())
 app.use(cors())
+
+
+app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.json())
+
 
 ```
 
@@ -44,7 +54,6 @@ const conexao = mysql.createConnection({
 })
 
 ```
-
 ---
 #### Cadastro de produtos
 ##### FrontEnd

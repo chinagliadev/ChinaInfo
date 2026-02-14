@@ -10,7 +10,7 @@ function fnAlterarFoto() {
 function fnLimparCampos() {
     document.getElementById("form-produtos").reset()
 }
- 
+
 function fnCadastrarProdutos() {
 
     let formDados = {
@@ -22,33 +22,37 @@ function fnCadastrarProdutos() {
         categoria: document.getElementById('categoria').value
     }
 
-    console.dir(formDados)
 
     fetch('http://localhost:3000/produto/', {
         method: 'POST',
-        headers: {'Content-type': 'application/json'},
+        headers: { 'Content-type': 'application/json' },
         body: JSON.stringify(formDados)
     })
         .then(response => response.json())
-        .then((dados)=>{
+        .then((dados) => {
             fnLimparCampos()
-            console.log(dados)
+            gerarToast()
         })
-        .catch(err=>console.log(err.message))
-        
+        .catch(err => console.log(err.message))
+
 }
 
 let foto = document.getElementById("foto")
 let btn_salvar = document.getElementById("btn-salvar-produto")
 
-
 foto.addEventListener("blur", () => {
     fnAlterarFoto()
 })
 
-btn_salvar.addEventListener("click",  ()=> {
+
+btn_salvar.addEventListener("click", () => {
     fnCadastrarProdutos()
 })
 
+const toastLiveExample = document.getElementById('liveToast')
 
- 
+function gerarToast() {
+    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+    toastBootstrap.show()
+}
+

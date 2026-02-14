@@ -2,7 +2,7 @@ function fnLimparCampos() {
     document.getElementById("formUnidades").reset()
 }
  
-function fnCadastrarProdutos() {
+function fnCadastrarUnidades() {
 
     let formUnidades = {
         nome: document.getElementById('nomeLoja').value,
@@ -24,6 +24,7 @@ function fnCadastrarProdutos() {
         .then(response => response.json())
         .then((dados)=>{
             fnLimparCampos()
+            gerarToast()
             console.log(dados)
         })
         .catch(err=>console.log(err.message))
@@ -35,8 +36,15 @@ let btn_salvar = document.getElementById("btn-salvar-unidades")
 
 
 btn_salvar.addEventListener("click",  ()=> {
-    fnCadastrarProdutos()
+    fnCadastrarUnidades()
 })
+
+const toastLiveExample = document.getElementById('liveToast')
+
+function gerarToast() {
+    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+    toastBootstrap.show()
+}
 
 
  

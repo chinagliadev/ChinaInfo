@@ -1,10 +1,14 @@
 const express = require('express')
 const cors = require('cors')
+const bodyParser = require('body-parser')
 const app = express()
 const PORT = 3000
 
 app.use(express.json())
 app.use(cors())
+
+app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.json())
 
 let mysql = require('mysql')
 
@@ -54,23 +58,10 @@ app.get('/unidades', (req, res) => {
 })
 
 app.post('/produto', (req,res)=>{
-    const {titulo, preco, descricao, avaliacao, foto, categoria} = req.body
-
-    console.log(titulo)
-    console.log(preco)
-    console.log(descricao)
-    console.log(avaliacao)
-    console.log(foto)
-    console.log(categoria)
-
-    const sql = `INSERT INTO produtos 
-                (titulo, foto, descricao, preco, avaliacao, categoria)
-                VALUES('${titulo}', '${foto}', '${descricao}', ${preco}, ${avaliacao}, '${categoria}')`
-
-
-    conexao.query(sql, (erro, resultado)=>{
+    const data = req.body
+    conexao.query('INSERT INTO produtos SET ?', [data],(erro, resultado)=>{
         if(erro){
-            throw erro
+            res.send(erro)
         }
 
         res.send(resultado.insertId)
@@ -96,6 +87,23 @@ app.post('/unidades/', (req, res)=>{
         if(erro) throw erro
 
         res.send(resultado.insertId)
+    })
+})
+
+app.post('/login/', (req,res)=>{
+    const usuario = req.body.usuario
+    const senha = req.body.senha
+
+    conexao.query(`SELECT * FROM usuarios WHERE usuario = '${usuario}' AND senha = '${senha}'`, (error, resultado)=>{
+        if(error){
+            res.send(error)
+        }else{
+            if(resultado.length > 0){
+                res.status(200).send('Sucesso !')
+            }else{
+                res.status(401).send('Invalido')
+            }
+        }
     })
 })
 
