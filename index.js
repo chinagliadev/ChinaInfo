@@ -99,12 +99,27 @@ app.post('/login/', (req,res)=>{
             res.send(error)
         }else{
             if(resultado.length > 0){
-                res.status(200).send('Sucesso !')
+                res.sendStatus(200)
             }else{
-                res.status(401).send('Invalido')
+                res.sendStatus(401)
             }
         }
     })
+})
+
+app.post('/cadastro/', (req, res)=>{
+
+    const dados = req.body
+
+    conexao.query('INSERT INTO usuarios SET ?', [dados], (erro, resultado)=>{
+        if(erro){
+            res.sendStatus(400)
+        }else{
+            res.sendStatus(200)
+        }
+
+    })
+
 })
 
 app.listen(PORT)
